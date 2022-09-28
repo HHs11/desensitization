@@ -54,7 +54,6 @@ public class DesensitizedAop {
             if (isPrimite(declaredField.getType())) {
                 Desensitized annotation = declaredField.getAnnotation(Desensitized.class);
                 if (annotation != null) {
-                    System.out.println(declaredField.getType());
                     declaredField.set(obj, desensitization(declaredField.get(obj), annotation));
                 }
             } else {
@@ -76,10 +75,8 @@ public class DesensitizedAop {
             method = MethodHandles.lookup()
                     .findStatic(DesensitizedUtil.class, annotation.method(), methodType);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
             return obj;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             return obj;
         }
 
@@ -87,7 +84,6 @@ public class DesensitizedAop {
         try {
             r = method.invoke((String) obj); // invoke|invoke
         } catch (Throwable e) {
-            e.printStackTrace();
             return obj;
         }
 
