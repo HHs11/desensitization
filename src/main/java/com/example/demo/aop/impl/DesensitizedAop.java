@@ -33,13 +33,27 @@ public class DesensitizedAop {
     }
 
     /**
+     * 判断是否是基础数据类型的包装类型
+     *
+     * @param clz
+     * @return
+     */
+    public static boolean isWrapClass(Class clz) {
+        try {
+            return ((Class) clz.getField("TYPE").get(null)).isPrimitive();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * 判断是否为基本类型：包括String
      *
      * @param clazz clazz
      * @return true：是; false：不是
      */
     private boolean isPrimite(Class<?> clazz) {
-        return clazz.isPrimitive() || clazz == String.class;
+        return clazz.isPrimitive() || clazz == String.class || isWrapClass(clazz);
     }
 
     private Object execute(Object obj) throws IllegalAccessException {
